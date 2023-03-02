@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:newmatrimony_api/Screen1.dart';
 import 'package:newmatrimony_api/add_user.dart';
 import 'package:newmatrimony_api/api_call.dart';
+import 'package:newmatrimony_api/fav_user.dart';
 import 'package:newmatrimony_api/male_user.dart';
 import 'package:newmatrimony_api/user_list.dart';
 
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: UserList(),
+      home: Screen1(),
     );
   }
 }

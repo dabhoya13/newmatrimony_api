@@ -47,7 +47,6 @@ class MyDatabase {
       await db
           .update('Tbl_User', map, where: 'UserID = ?', whereArgs: [userID]);
     } else {
-      await db.insert('Tbl_User', map);
     }
   }
 

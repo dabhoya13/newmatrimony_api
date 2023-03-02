@@ -4,13 +4,13 @@ import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:newmatrimony_api/add_user.dart';
 import 'package:newmatrimony_api/model/usermodel.dart';
 import 'package:newmatrimony_api/remote_service.dart';
-import 'package:http/http.dart' as http;
-class MaleListPage extends StatefulWidget {
+
+class FavUserList extends StatefulWidget {
   @override
-  State<MaleListPage> createState() => _MaleListPage();
+  State<FavUserList> createState() => _FavUserList();
 }
 
-class _MaleListPage extends State<MaleListPage> {
+class _FavUserList extends State<FavUserList> {
   List<UserModel> localList = [];
   List<UserModel> searchList = [];
   bool isGetData = true;
@@ -372,11 +372,11 @@ class _MaleListPage extends State<MaleListPage> {
                       );
                     } else {
                       return (Center(
-                        child: CircularProgressIndicator(color: Colors.pink,),
+                        child: CircularProgressIndicator(),
                       ));
                     }
                   },
-                  future: isGetData ? RemoteService().getMaleUser() : null),
+                  future: isGetData ? RemoteService().getFavUser() : null),
             ],
           )),
     ));

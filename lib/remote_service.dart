@@ -19,6 +19,40 @@ class RemoteService {
     }
   }
 
+  Future<List<UserModel>?> getFavUser() async {
+    var client = http.Client();
+    var uri = Uri.parse(
+        'https://63ddf109f1af41051b0b5b72.mockapi.io/api/matrimony/Matrimony?FavUser=true');
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      // print('response.body ::: ${response.body}');
+      return userModelFromJson(json);
+    }
+  }
+
+  Future<List<UserModel>?> getFemaleUser() async {
+    var client = http.Client();
+    var uri = Uri.parse(
+        'https://63ddf109f1af41051b0b5b72.mockapi.io/api/matrimony/Matrimony?Gender=2');
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      // print('response.body ::: ${response.body}');
+      return userModelFromJson(json);
+    }
+  }
+  Future<List<UserModel>?> getMaleUser() async {
+    var client = http.Client();
+    var uri = Uri.parse(
+        'https://63ddf109f1af41051b0b5b72.mockapi.io/api/matrimony/Matrimony?Gender=1');
+    var response = await client.get(uri);
+    if (response.statusCode == 200) {
+      var json = response.body;
+      // print('response.body ::: ${response.body}');
+      return userModelFromJson(json);
+    }
+  }
   Future<dynamic> post(String api, dynamic object) async {
     var client = http.Client();
     var _header = {'Content-Type': 'application/json'};
@@ -32,11 +66,12 @@ class RemoteService {
 
   Future<List<UserModel>?> put(String api, dynamic object) async {
     var client = http.Client();
-    var _header = {'Content-Type': 'application/json'};
     var uri = Uri.parse(baseUrl + api);
-    var _payload = json.encode(object);
-    var response = await client.post(uri, body: _payload, headers: _header);
+    var _payload = object;
+
+    var response = await client.put(uri, body: _payload);
     if (response.statusCode == 200) {
+      // print('VALUE:::${response.body}');
       var json = response.body;
       return userModelFromJson(json);
     } else {}
@@ -59,34 +94,48 @@ class RemoteService {
     gender1,
     mobileNo,
   }) async {
-
-    Map<String, Object?> map = Map();
-    map['UserName']=userName1;
-    map['DOB']=dob;
-    map['CityID']=cityId;
-    map['Gender']=gender1;
-    map['MobileNo']=mobileNo;
-    // var user = UserModel(
-    //     userName: userName1,
-    //     gender: gender1,
-    //     mobileno: mobileNo,
-    //     cityId: cityId);
-    print('USERID:::1:::$userId');
-    if (userId!=null && int.parse(userId) > 0) {
+    Map<dynamic, dynamic> map = {};
+    map['UserName'] = userName1.toString();
+    map['Dob'] = dob.toString();
+    map['CityID'] = cityId.toString();
+    map['Gender'] = gender1.toString();
+    map['Mobileno'] = mobileNo.toString();
+    // print('USERID:::1:::$map');
+    userId = int.parse(userId.toString());
+    // print('USERID:::1:::$userId');
+    if (userId != null && userId > 0) {
       var response = await RemoteService()
           .put(
             '/Matrimony/$userId',
-        map,
+            map,
           )
           .catchError((err) {});
+
       if (response == null) return;
-      debugPrint('successful:Edit');
+      // debugPrint('successful:Edit');
     } else {
-      var response = await RemoteService()
-          .post('/Matrimony', map)
-          .catchError((err) {});
-      if (response == null) return;
-      debugPrint('successful:');
+      var response1 =
+          await RemoteService().post('/Matrimony', map).catchError((err) {});
+      if (response1 == null) return;
+      // debugPrint('successful:');
     }
+  }
+
+  Future<void> updateFavUser({userId, favUser}) async {
+    Map<dynamic, dynamic> map = {};
+    map['FavUser'] = favUser;
+    // print('USERID:::1:::$map');
+    userId = int.parse(userId.toString());
+    if (userId != null && userId > 0) {
+      var response = await RemoteService()
+          .put(
+            '/Matrimony/$userId',
+            map,
+          )
+          .catchError((err) {});
+
+      if (response == null) return;
+      // debugPrint('successful:Edit');
+    } else {}
   }
 }

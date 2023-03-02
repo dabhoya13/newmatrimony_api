@@ -8,43 +8,46 @@ List<UserModel> userModelFromJson(String str) => List<UserModel>.from(json.decod
 
 String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class
-UserModel {
+class UserModel {
   UserModel({
     this.userName,
     this.dob,
     this.gender,
     this.mobileno,
     this.cityId,
-    this.images,
     this.favUser,
+    this.images,
     this.id,
   });
 
   String? userName;
   String? dob;
-  int? gender;
+  String? gender;
   String? mobileno;
-  int? cityId;
+  String? cityId;
+  String? favUser;
   String? images;
-  bool? favUser;
   String? id;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    userName: json["UserName"],
-    dob: json["Dob"],
-    gender: json["Gender"],
-    mobileno: json["Mobileno"],
-    cityId: json["CityID"],
-    favUser: json["FavUser"],
-    images: json["Images"],
+    userName: json["UserName"].toString(),
+    dob: json["Dob"].toString(),
+    gender: json["Gender"].toString(),
+    mobileno: json["Mobileno"].toString(),
+    cityId: json["CityID"].toString(),
+    favUser: json["FavUser"].toString(),
+    images: json["Images"].toString(),
     id: json["id"],
   );
 
   Map<String, dynamic> toJson() => {
     "UserName": userName,
+    "Dob": dob,
     "Gender": gender,
     "Mobileno": mobileno,
     "CityID": cityId,
+    "FavUser": favUser,
+    "Images": images,
+    "id": id,
   };
 }
